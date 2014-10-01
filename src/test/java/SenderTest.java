@@ -33,13 +33,13 @@ public class SenderTest extends AbstractTest {
                 " \"customerIp\":\"46.238.126.146\"," +
                 " \"merchantPosId\":\"145227\"," +
                 " \"validityTime\":1200000," +
-                " \"description\":\"Orange On-line: płatność na kwotę 400,00\"," +
+                " \"description\":\"Sklep On-line: płatność na kwotę 400,00\"," +
                 " \"additionalDescription\":\"654321\"," +
                 " \"currencyCode\":\"PLN\"," +
                 " \"totalAmount\":40000," +
                 " \"buyer\":{" +
                 "       \"customerId\":\"123\"," +
-                "       \"email\":\"marcinerbel@gmail.com\"," +
+                "       \"email\":\"michal.basinski88@gmail.com\"," +
                 "       \"phone\":\"666666999\"," +
                 "       \"firstName\":\"John\"," +
                 "       \"lastName\":\"D\"}," +
