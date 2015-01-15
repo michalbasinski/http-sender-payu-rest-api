@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.http.HttpResponse;
 
 public class HttpResponseUtils {
@@ -12,7 +11,7 @@ public class HttpResponseUtils {
         BufferedReader rd = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
 
         StringBuffer responsePayload = new StringBuffer();
-        String line = "";
+        String line;
         while ((line = rd.readLine()) != null) {
             responsePayload.append(line);
         }

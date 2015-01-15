@@ -1,11 +1,10 @@
+import commons.Constants;
 import org.apache.commons.codec.binary.Base64;
 
 public class BasicAuthUtils {
-    private static final String BASIC_SEPARATOR = ":";
-    private static final String BASIC_PREFIX = "Basic ";
 
-    public static String generateAuthorizationHeader(String login, String password) {
-        byte[] base64 = Base64.encodeBase64((login + BASIC_SEPARATOR + password).getBytes());
-        return BASIC_PREFIX + new String(base64);
+    public static String generateAuthorizationHeader(final String login, final String password) {
+        byte[] base64 = Base64.encodeBase64((login + Constants.BASIC_SEPARATOR + password).getBytes());
+        return Constants.BASIC_PREFIX + new String(base64);
     }
 }
