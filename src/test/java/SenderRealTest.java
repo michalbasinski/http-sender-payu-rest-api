@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import commons.Constants;
+import exception.WrongPayloadException;
+import exception.WrongProtocolException;
 import org.apache.http.HttpResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +26,7 @@ public class SenderRealTest extends AbstractTest {
     }
 
     @Test
-    public void shouldCreateNewOrderWithoutErrors() throws Exception {
+    public void shouldCreateNewOrderWithoutErrors() throws WrongProtocolException, WrongPayloadException, IOException {
         Sender sender = new Sender();
         String url = properties.getProperty("productionUrlAPIv2_1");
         String login = properties.getProperty("productionPos");

@@ -16,7 +16,7 @@ import org.apache.http.message.BasicHeader;
 
 public class Sender {
 
-    private static final HttpClient HTTP_CLIENT = new DefaultHttpClient();
+    private HttpClient httpClient = new DefaultHttpClient();
     private static final int DEFAULT_TIMEOUT = 10;
 
     public HttpResponse sendPost(String url, String payload, Map<String, String> headers) throws WrongPayloadException, WrongProtocolException, IOException {
@@ -30,15 +30,19 @@ public class Sender {
 
         try {
             post.setEntity(new StringEntity(payload));
-            response = HTTP_CLIENT.execute(post);
+            response = httpClient.execute(post);
         } catch (UnsupportedEncodingException e) {
             throw new WrongPayloadException(e);
         } catch (ClientProtocolException e) {
             throw new WrongProtocolException(e);
         }
 
-        HTTP_CLIENT.getConnectionManager().closeIdleConnections(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+        httpClient.getConnectionManager().closeIdleConnections(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
 
         return response;
+    }
+
+    public void setHttpClient(HttpClient client) {
+        this.httpClient = client;
     }
 }

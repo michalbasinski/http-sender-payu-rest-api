@@ -4,7 +4,8 @@ import org.apache.commons.codec.binary.Base64;
 public class BasicAuthUtils {
 
     public static String generateAuthorizationHeader(final String login, final String password) {
-        byte[] base64 = Base64.encodeBase64((login + Constants.BASIC_SEPARATOR + password).getBytes());
-        return Constants.BASIC_PREFIX + new String(base64);
+        StringBuilder builder = new StringBuilder();
+        String headerToEncode = builder.append(login).append(Constants.BASIC_SEPARATOR).append(password).toString();
+        return Constants.BASIC_PREFIX + new String(Base64.encodeBase64(headerToEncode.getBytes()));
     }
 }
