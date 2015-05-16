@@ -1,10 +1,12 @@
+package com.payu.sdk.commons;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import exception.WrongPayloadException;
-import exception.WrongProtocolException;
+import com.payu.sdk.exception.WrongPayloadException;
+import com.payu.sdk.exception.WrongProtocolException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;

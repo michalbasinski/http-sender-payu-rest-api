@@ -1,4 +1,5 @@
-import commons.Constants;
+package com.payu.sdk.commons;
+
 import org.apache.commons.codec.binary.Base64;
 
 public class BasicAuthUtils {

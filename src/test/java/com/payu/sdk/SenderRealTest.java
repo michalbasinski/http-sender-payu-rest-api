@@ -1,12 +1,22 @@
+package com.payu.sdk;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import commons.Constants;
-import exception.WrongPayloadException;
-import exception.WrongProtocolException;
+import com.payu.sdk.commons.*;
+import com.payu.sdk.exception.WrongPayloadException;
+import com.payu.sdk.exception.WrongProtocolException;
+import com.payu.sdk.requests.OrderCreateRequest;
+import com.payu.sdk.requests.builders.OrderCreateRequestBuilder;
+import com.payu.sdk.requests.entities.Buyer;
+import com.payu.sdk.requests.entities.Product;
+import com.payu.sdk.requests.entities.builders.BuyerBuilder;
+import com.payu.sdk.requests.entities.builders.ProductBuilder;
 import org.apache.http.HttpResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,30 +45,25 @@ public class SenderRealTest extends AbstractTest {
         headers.put("Authorization", BasicAuthUtils.generateAuthorizationHeader(login, password));
         headers.put("Content-type", Constants.CONTENT_TYPE_JSON);
 
-        String payload = "{" +
-                " \"cancelUrl\":\"http://google.pl\"," +
-                " \"completeUrl\":\"http://google.pl\"," +
-                " \"customerIp\":\"46.238.126.146\"," +
-                " \"merchantPosId\":\"145227\"," +
-                " \"validityTime\":1200000," +
-                " \"description\":\"Sklep On-line: płatność na kwotę 400,00\"," +
-                " \"additionalDescription\":\"654321\"," +
-                " \"currencyCode\":\"PLN\"," +
-                " \"totalAmount\":40000," +
-                " \"buyer\":{" +
-                "       \"customerId\":\"123\"," +
-                "       \"email\":\"michal.basinski88@gmail.com\"," +
-                "       \"phone\":\"666666999\"," +
-                "       \"firstName\":\"John\"," +
-                "       \"lastName\":\"D\"}," +
-                "\"products\":[" +
-                "{  \"name\":\"super hiper iPhone\"," +
-                "   \"unitPrice\":40000," +
-                "   \"quantity\":1}" +
-                "]" +
-                "}";
+        List<Product> productList = new ArrayList<Product>();
+        productList.add(new ProductBuilder().withName("product1").withUnitPrice(111).withQuantity(1).build());
 
-        HttpResponse response = sender.sendPost(url, payload, headers);
+        Buyer buyer = new BuyerBuilder()
+                .withEmail("michal.basinski88@gmail.com")
+                .withFirstName("John")
+                .withLastName("Doe")
+                .withPhone("123456789")
+                .build();
+
+        OrderCreateRequest orderCreateRequest = new OrderCreateRequestBuilder()
+                .withTotalAmount(100).withDescription("description")
+                .withAdditionalDescription("additional description")
+                .withProducts(productList).withCurrencyCode("PLN")
+                .withCustomerIP("46.238.126.146").withMerchantPosId("145227")
+                .withBuyer(buyer).withContinueUrl("http://google.pl")
+                .build();
+
+        HttpResponse response = sender.sendPost(url, JSONConverter.convertToJSON(orderCreateRequest), headers);
         Map<FieldNames, String> result = httpResponseUtils.parseResponse(response);
 
         LOGGER.log(Level.INFO, "Sending 'POST' request to URL : " + url +

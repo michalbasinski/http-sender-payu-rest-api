@@ -1,4 +1,4 @@
-package exception;
+package com.payu.sdk.exception;
 
 public class WrongProtocolException extends Exception {
     public WrongProtocolException() {

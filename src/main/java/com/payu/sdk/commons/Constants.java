@@ -1,4 +1,4 @@
-package commons;
+package com.payu.sdk.commons;
 
 public class Constants {
     public static final String BASIC_SEPARATOR = ":";

@@ -1,5 +1,8 @@
-import exception.WrongPayloadException;
-import exception.WrongProtocolException;
+package com.payu.sdk;
+
+import com.payu.sdk.commons.Sender;
+import com.payu.sdk.exception.WrongPayloadException;
+import com.payu.sdk.exception.WrongProtocolException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;

@@ -1,3 +1,6 @@
+package com.payu.sdk;
+
+import com.payu.sdk.commons.BasicAuthUtils;
 import junit.framework.TestCase;
 import org.junit.Assert;
 

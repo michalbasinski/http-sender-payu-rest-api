@@ -7,6 +7,14 @@
     <groupId>com.mb.payu</groupId>
     <artifactId>http-sender</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>codehaus</id>
+            <url>http://repository.codehaus.org/org/codehaus</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -29,6 +37,12 @@
             <version>1.2.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.8.5</version>
+        </dependency>
+
     </dependencies>
 
 
