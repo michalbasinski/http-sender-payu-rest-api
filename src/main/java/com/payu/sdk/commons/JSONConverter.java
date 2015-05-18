@@ -1,6 +1,6 @@
 package com.payu.sdk.commons;
 
-import com.payu.sdk.requests.OrderCreateRequest;
+import requests.OrderCreateRequest;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
