@@ -1,6 +1,7 @@
 package com.payu.sdk;
 
-import com.payu.sdk.commons.Sender;
+import com.payu.sdk.exception.HttpClientException;
+import com.payu.sdk.network.Sender;
 import com.payu.sdk.exception.WrongPayloadException;
 import com.payu.sdk.exception.WrongProtocolException;
 import org.apache.http.client.ClientProtocolException;
@@ -13,7 +14,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 
 import static com.googlecode.catchexception.CatchException.*;
 import static org.junit.Assert.assertTrue;
@@ -31,28 +31,28 @@ public class SenderTest extends AbstractTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws IOException, WrongProtocolException, WrongPayloadException {
+    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws WrongProtocolException, WrongPayloadException, HttpClientException, IOException {
         //given
         doThrow(UnsupportedEncodingException.class).when(mockedHttpClient).execute(any(HttpPost.class));
         Sender sender = new Sender();
         sender.setHttpClient(mockedHttpClient);
 
         //when
-        catchException(sender).sendPost("URL", "LOGIN", new HashMap<String, String>());
+        catchException(sender).sendPost("URL", "LOGIN", "PASSWORD", "PAYLOAD");
 
         //then
         assertTrue(caughtException() instanceof WrongPayloadException);
     }
 
     @Test
-    public void shouldThrowExceptionWhenPayloadWasNotSupported() throws IOException, WrongProtocolException, WrongPayloadException {
+    public void shouldThrowExceptionWhenPayloadWasNotSupported() throws WrongProtocolException, WrongPayloadException, HttpClientException, IOException {
         //given
         doThrow(ClientProtocolException.class).when(mockedHttpClient).execute(any(HttpPost.class));
         Sender sender = new Sender();
         sender.setHttpClient(mockedHttpClient);
 
         //when
-        catchException(sender).sendPost("URL", "LOGIN", new HashMap<String, String>());
+        catchException(sender).sendPost("URL", "LOGIN", "PASSWORD", "PAYLOAD");
 
         //then
         assertTrue(caughtException() instanceof WrongProtocolException);
