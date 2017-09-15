@@ -1,15 +1,9 @@
 package com.payu.sdk.exception;
 
 public class WrongPayloadException extends Exception {
-    public WrongPayloadException() {
-        super();
+
+    public WrongPayloadException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public WrongPayloadException(String message) {
-        super(message);
-    }
-
-    public WrongPayloadException(Exception e) {
-        super(e);
-    }
 }
