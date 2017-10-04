@@ -2,7 +2,6 @@ package com.payu.sdk.network;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.concurrent.TimeUnit;
 
 import com.payu.sdk.authentication.BasicAuthUtils;
 import com.payu.sdk.exception.HttpClientException;
@@ -37,10 +36,7 @@ public class Sender {
             throw new WrongProtocolException(e.getMessage(), e);
         } catch (IOException e) {
             throw new HttpClientException(e.getMessage(), e);
-        } finally {
-            httpClient.getConnectionManager().closeIdleConnections(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
         }
-
         return new PayUHttpResponse(rawHttpResponse);
     }
 

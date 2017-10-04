@@ -17,7 +17,7 @@ public class PayUHttpResponse {
     }
 
     public PayUHttpResponse(HttpResponse rawHttpResponse) throws WrongPayloadException {
-        BufferedReader rd = null;
+        BufferedReader rd;
         StringBuffer responsePayload = new StringBuffer();
         try {
             rd = new BufferedReader(new InputStreamReader(rawHttpResponse.getEntity().getContent()));
