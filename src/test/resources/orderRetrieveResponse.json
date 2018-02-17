@@ -1,0 +1,22 @@
+{
+	"orders": [{
+		"orderId": "TLG3NDTQC7180217GUEST000P01",
+		"orderCreateDate": "2018-02-17T19:34:33.747+01:00",
+		"customerIp": "46.238.126.146",
+		"merchantPosId": "145227",
+		"description": "description",
+		"additionalDescription": "additional description",
+		"currencyCode": "PLN",
+		"totalAmount": "100",
+		"status": "NEW",
+		"products": [{
+			"name": "product1",
+			"unitPrice": "111",
+			"quantity": "1"
+		}]
+	}],
+	"status": {
+		"statusCode": "SUCCESS",
+		"statusDesc": "Request processing successful"
+	}
+}

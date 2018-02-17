@@ -1,4 +1,4 @@
-package com.payu.sdk.network;
+package com.payu.sdk.network.senders;
 
 import org.apache.commons.codec.binary.Base64;
 

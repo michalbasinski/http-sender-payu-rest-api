@@ -1,4 +1,4 @@
-package com.payu.sdk;
+package com.payu.sdk.properties;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +18,10 @@ public class SDKProperties {
         } catch (IOException e) {
 
         }
+    }
+
+    public static String getProperty(PropertyNames propertyName) {
+        return properties.getProperty(propertyName.getPropertyName());
     }
 
     public static String getPropertyByName(String propertyName) {

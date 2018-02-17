@@ -1,9 +1,8 @@
 package com.payu.sdk;
 
-import com.payu.sdk.exceptions.HttpClientException;
 import com.payu.sdk.exceptions.WrongPayloadException;
 import com.payu.sdk.exceptions.WrongProtocolException;
-import com.payu.sdk.network.Sender;
+import com.payu.sdk.network.senders.HttpPostSender;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -21,28 +20,28 @@ import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 
-public class SenderTest {
+public class HttpPostSenderTest {
 
     @Mock
     private HttpClient mockedHttpClient;
 
     @InjectMocks
-    private Sender sender;
+    private HttpPostSender httpPostSender;
 
     @Before
     public void setUp() throws IOException {
-        sender = new Sender();
+        httpPostSender = new HttpPostSender();
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws WrongProtocolException, HttpClientException, IOException {
+    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws WrongProtocolException, IOException {
         //given
         doThrow(UnsupportedEncodingException.class).when(mockedHttpClient).execute(any(HttpPost.class));
 
         try {
             //when
-            sender.sendPost("URL", "LOGIN", "PASSWORD", "PAYLOAD");
+            httpPostSender.sendRequest("URL", "LOGIN", "PASSWORD", "PAYLOAD");
             fail("Exception was not thrown!");
         } catch (WrongPayloadException e) {
             //thrown
@@ -51,13 +50,13 @@ public class SenderTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenPayloadWasNotSupported() throws WrongProtocolException, HttpClientException, IOException, WrongPayloadException {
+    public void shouldThrowExceptionWhenPayloadWasNotSupported() throws WrongProtocolException, IOException, WrongPayloadException {
         //given
         doThrow(ClientProtocolException.class).when(mockedHttpClient).execute(any(HttpPost.class));
 
         try {
             //when
-            sender.sendPost("URL", "LOGIN", "PASSWORD", "PAYLOAD");
+            httpPostSender.sendRequest("URL", "LOGIN", "PASSWORD", "PAYLOAD");
             fail("Exception was not thrown!");
         } catch (WrongProtocolException e) {
             //thrown

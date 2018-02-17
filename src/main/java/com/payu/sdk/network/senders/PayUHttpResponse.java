@@ -1,4 +1,4 @@
-package com.payu.sdk.network;
+package com.payu.sdk.network.senders;
 
 import com.payu.sdk.exceptions.WrongPayloadException;
 import org.apache.http.HttpResponse;
@@ -21,7 +21,7 @@ public class PayUHttpResponse {
                 responsePayload.append(line);
             }
         } catch (IOException e) {
-            throw new WrongPayloadException("Error during converting Apache Http client response to PayU format", e);
+            throw new WrongPayloadException("Http response to PayU format parsing failed", e);
         }
         this.payload = String.valueOf(responsePayload);
         this.status = String.valueOf(rawHttpResponse.getStatusLine().getStatusCode());

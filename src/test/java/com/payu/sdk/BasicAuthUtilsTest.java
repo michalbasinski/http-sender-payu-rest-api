@@ -1,6 +1,6 @@
 package com.payu.sdk;
 
-import com.payu.sdk.network.BasicAuthUtils;
+import com.payu.sdk.network.senders.BasicAuthUtils;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
