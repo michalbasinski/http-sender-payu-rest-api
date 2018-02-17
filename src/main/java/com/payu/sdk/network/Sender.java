@@ -1,30 +1,31 @@
 package com.payu.sdk.network;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import com.payu.sdk.authentication.BasicAuthUtils;
-import com.payu.sdk.exception.HttpClientException;
-import com.payu.sdk.exception.WrongPayloadException;
-import com.payu.sdk.exception.WrongProtocolException;
+import com.payu.sdk.exceptions.HttpClientException;
+import com.payu.sdk.exceptions.WrongPayloadException;
+import com.payu.sdk.exceptions.WrongProtocolException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 public class Sender {
 
+    private static final String HEADER_AUTHORIZATION = "Authorization";
+    private static final String HEADER_CONTENT_TYPE = "Content-type";
+    private static final String CONTENT_TYPE_JSON = "application/json";
+
     private HttpClient httpClient = new DefaultHttpClient();
-    private static final int DEFAULT_TIMEOUT = 10;
 
     public PayUHttpResponse sendPost(String url, String login, String password, String payload) throws WrongPayloadException, WrongProtocolException, HttpClientException, IOException {
 
         HttpPost post = new HttpPost(url);
-        post.setHeader("Authorization", BasicAuthUtils.generateAuthorizationHeader(login, password));
-        post.setHeader("Content-type", HttpConstants.CONTENT_TYPE_JSON);
+        post.setHeader(HEADER_AUTHORIZATION, BasicAuthUtils.generateAuthorizationHeader(login, password));
+        post.setHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
 
         HttpResponse rawHttpResponse;
         try {
@@ -38,9 +39,5 @@ public class Sender {
             throw new HttpClientException(e.getMessage(), e);
         }
         return new PayUHttpResponse(rawHttpResponse);
-    }
-
-    public void setHttpClient(HttpClient client) {
-        this.httpClient = client;
     }
 }

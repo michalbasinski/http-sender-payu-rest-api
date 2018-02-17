@@ -1,14 +1,8 @@
 package com.payu.sdk;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.payu.sdk.exception.HttpClientException;
-import com.payu.sdk.exception.WrongPayloadException;
-import com.payu.sdk.exception.WrongProtocolException;
+import com.payu.sdk.exceptions.HttpClientException;
+import com.payu.sdk.exceptions.WrongPayloadException;
+import com.payu.sdk.exceptions.WrongProtocolException;
 import com.payu.sdk.messages.converters.JSONConverter;
 import com.payu.sdk.messages.converters.ResponseType;
 import com.payu.sdk.messages.entities.Buyer;
@@ -26,26 +20,32 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class SenderRealTest extends AbstractTest {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class SenderRealTest {
 
     private Logger LOGGER = Logger.getGlobal();
     private String url;
     private String login;
     private String password;
 
+    private Sender sender;
+
     @Before
     public void setUp() throws IOException {
-        prepareEnvironmentProperties();
-        url = properties.getProperty("productionUrlAPIv2_1");
-        login = properties.getProperty("productionPos");
-        password = properties.getProperty("productionSecondKeyMD5");
+        url = SDKProperties.getPropertyByName("url");
+        login = SDKProperties.getPropertyByName("pos");
+        password = SDKProperties.getPropertyByName("secondKeyMD5");
+        sender = new Sender();
     }
 
     @Test
     @Ignore
     public void shouldCreateNewOrderWithoutErrors() throws WrongProtocolException, WrongPayloadException, HttpClientException, IOException {
-        Sender sender = new Sender();
-
         OpenPayURequest orderCreateRequest = prepareOrderCreateRequest();
 
         PayUHttpResponse result = sender.sendPost(url, login, password, JSONConverter.convertToJSON(orderCreateRequest));
