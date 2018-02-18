@@ -1,7 +1,6 @@
 package com.payu.sdk;
 
-import com.payu.sdk.exceptions.WrongPayloadException;
-import com.payu.sdk.exceptions.WrongProtocolException;
+import com.payu.sdk.exceptions.PayuSdkException;
 import com.payu.sdk.messages.converters.ResponseDeserializer;
 import com.payu.sdk.messages.converters.ResponseType;
 import com.payu.sdk.messages.response.OrderRetrieveResponse;
@@ -37,7 +36,7 @@ public class HttpGetSenderTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws WrongProtocolException, IOException {
+    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws IOException {
         //given
         doThrow(IOException.class).when(mockedHttpClient).execute(any(HttpGet.class));
 
@@ -47,12 +46,12 @@ public class HttpGetSenderTest {
             fail("Exception was not thrown!");
         } catch (Exception e) {
             //thrown
-            assertTrue(e instanceof IOException);
+            assertTrue(e instanceof PayuSdkException);
         }
     }
 
     @Test
-    public void shouldRetrieveOrderWithoutErrors() throws IOException, WrongPayloadException {
+    public void shouldRetrieveOrderWithoutErrors() throws IOException, PayuSdkException {
         //given
         byte[] bytes = getClass().getClassLoader().getResourceAsStream("orderRetrieveResponse.json").readAllBytes();
         String orderRetrieveJson = new String(bytes, "UTF-8");

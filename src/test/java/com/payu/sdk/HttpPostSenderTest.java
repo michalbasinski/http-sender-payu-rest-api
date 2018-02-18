@@ -1,7 +1,6 @@
 package com.payu.sdk;
 
-import com.payu.sdk.exceptions.WrongPayloadException;
-import com.payu.sdk.exceptions.WrongProtocolException;
+import com.payu.sdk.exceptions.PayuSdkException;
 import com.payu.sdk.messages.converters.ResponseDeserializer;
 import com.payu.sdk.messages.converters.ResponseType;
 import com.payu.sdk.messages.response.OrderCreateResponse;
@@ -46,7 +45,7 @@ public class HttpPostSenderTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws WrongProtocolException, IOException {
+    public void shouldThrowExceptionWhenEncodingWasNotSupported() throws IOException {
         //given
         doThrow(UnsupportedEncodingException.class).when(mockedHttpClient).execute(any(HttpPost.class));
 
@@ -54,14 +53,14 @@ public class HttpPostSenderTest {
             //when
             httpPostSender.sendRequest("URL", "LOGIN", "PASSWORD", "PAYLOAD");
             fail("Exception was not thrown!");
-        } catch (WrongPayloadException e) {
+        } catch (PayuSdkException e) {
             //thrown
-            assertTrue(e instanceof WrongPayloadException);
+            assertTrue(e instanceof PayuSdkException);
         }
     }
 
     @Test
-    public void shouldThrowExceptionWhenPayloadWasNotSupported() throws WrongProtocolException, IOException, WrongPayloadException {
+    public void shouldThrowExceptionWhenPayloadWasNotSupported() throws IOException {
         //given
         doThrow(ClientProtocolException.class).when(mockedHttpClient).execute(any(HttpPost.class));
 
@@ -69,14 +68,14 @@ public class HttpPostSenderTest {
             //when
             httpPostSender.sendRequest("URL", "LOGIN", "PASSWORD", "PAYLOAD");
             fail("Exception was not thrown!");
-        } catch (WrongProtocolException e) {
+        } catch (PayuSdkException e) {
             //thrown
-            assertTrue(e instanceof WrongProtocolException);
+            assertTrue(e instanceof PayuSdkException);
         }
     }
 
     @Test
-    public void shouldWrapOrderCreateResponseCorrectly() throws WrongProtocolException, WrongPayloadException, IOException {
+    public void shouldWrapOrderCreateResponseCorrectly() throws IOException, PayuSdkException {
         //given
         byte[] orderCreateResponseBytes = getClass().getClassLoader().getResourceAsStream("orderCreateResponse.json").readAllBytes();
         String orderCreateResponseSerialized = new String(orderCreateResponseBytes, "UTF-8");

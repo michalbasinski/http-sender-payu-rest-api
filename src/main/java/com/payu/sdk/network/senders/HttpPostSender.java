@@ -1,7 +1,6 @@
 package com.payu.sdk.network.senders;
 
-import com.payu.sdk.exceptions.WrongPayloadException;
-import com.payu.sdk.exceptions.WrongProtocolException;
+import com.payu.sdk.exceptions.PayuSdkException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
@@ -12,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 
 public class HttpPostSender extends AbstractHttpSender {
 
-    public PayUHttpResponse sendRequest(String url, String login, String password, String payload) throws WrongPayloadException, WrongProtocolException, IOException {
+    public PayUHttpResponse sendRequest(String url, String login, String password, String payload) throws PayuSdkException {
         try {
             HttpPost httpPost = new HttpPost(url);
 
@@ -23,9 +22,11 @@ public class HttpPostSender extends AbstractHttpSender {
             HttpResponse rawHttpResponse = httpClient.execute(httpPost);
             return new PayUHttpResponse(rawHttpResponse);
         } catch (UnsupportedEncodingException e) {
-            throw new WrongPayloadException(e.getMessage(), e);
+            throw new PayuSdkException(e.getMessage(), e);
         } catch (ClientProtocolException e) {
-            throw new WrongProtocolException(e.getMessage(), e);
+            throw new PayuSdkException(e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PayuSdkException(e.getMessage(), e);
         }
     }
 }

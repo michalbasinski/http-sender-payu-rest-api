@@ -1,8 +1,6 @@
 package com.payu.sdk;
 
-import com.payu.sdk.exceptions.PayUException;
-import com.payu.sdk.exceptions.WrongPayloadException;
-import com.payu.sdk.exceptions.WrongProtocolException;
+import com.payu.sdk.exceptions.PayuSdkException;
 import com.payu.sdk.messages.converters.RequestSerializer;
 import com.payu.sdk.messages.converters.ResponseDeserializer;
 import com.payu.sdk.messages.converters.ResponseType;
@@ -60,7 +58,7 @@ public class PayUIntegrationTest {
 
     @Test
     @Ignore
-    public void shouldCreateNewOrderWithoutErrors() throws WrongProtocolException, WrongPayloadException, IOException {
+    public void shouldCreateNewOrderWithoutErrors() throws IOException, PayuSdkException {
         OpenPayURequest orderCreateRequest = prepareOrderCreateRequest();
 
         PayUHttpResponse result = httpPostSender.sendRequest(orderCreateUrl, login, password, RequestSerializer.serializeRequest(orderCreateRequest));
@@ -79,7 +77,7 @@ public class PayUIntegrationTest {
 
     @Test
     @Ignore
-    public void testRetrieve() throws IOException, WrongPayloadException {
+    public void testRetrieve() throws PayuSdkException, IOException {
         String[] args = new String[]{"TLG3NDTQC7180217GUEST000P01"};
         MessageFormat format = new MessageFormat(orderRetrieveUrl);
         String url = format.format(args);
@@ -90,7 +88,7 @@ public class PayUIntegrationTest {
 
     @Test
     @Ignore
-    public void testSDKRetrieve() throws PayUException {
+    public void testSDKRetrieve() throws PayuSdkException {
         String orderId = "TLG3NDTQC7180217GUEST000P01";
         PayUSDK sdk = new PayUSDKImpl();
         OrderRetrieveResponse retrieveResponse = (OrderRetrieveResponse) sdk.retrieveOrder(orderId);

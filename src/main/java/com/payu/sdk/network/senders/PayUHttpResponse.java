@@ -1,6 +1,6 @@
 package com.payu.sdk.network.senders;
 
-import com.payu.sdk.exceptions.WrongPayloadException;
+import com.payu.sdk.exceptions.PayuSdkException;
 import org.apache.http.HttpResponse;
 
 import java.io.BufferedReader;
@@ -11,7 +11,7 @@ public class PayUHttpResponse {
     private String payload;
     private String status;
 
-    public PayUHttpResponse(HttpResponse rawHttpResponse) throws WrongPayloadException {
+    public PayUHttpResponse(HttpResponse rawHttpResponse) throws PayuSdkException {
         BufferedReader rd;
         StringBuffer responsePayload = new StringBuffer();
         try {
@@ -21,7 +21,7 @@ public class PayUHttpResponse {
                 responsePayload.append(line);
             }
         } catch (IOException e) {
-            throw new WrongPayloadException("Http response to PayU format parsing failed", e);
+            throw new PayuSdkException("Http response to PayU format parsing failed", e);
         }
         this.payload = String.valueOf(responsePayload);
         this.status = String.valueOf(rawHttpResponse.getStatusLine().getStatusCode());
