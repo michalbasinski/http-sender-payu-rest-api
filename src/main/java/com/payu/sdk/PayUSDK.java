@@ -5,11 +5,13 @@ import com.payu.sdk.messages.request.OrderCreateRequest;
 import com.payu.sdk.messages.request.OrderStatusUpdateRequest;
 import com.payu.sdk.messages.request.RefundCreateRequest;
 import com.payu.sdk.messages.response.OpenPayUResponse;
+import com.payu.sdk.messages.response.OrderCreateResponse;
+import com.payu.sdk.messages.response.OrderRetrieveResponse;
 import com.payu.sdk.messages.response.RefundCreateResponse;
 
 public interface PayUSDK {
-    OpenPayUResponse createOrder(OrderCreateRequest orderCreateRequest) throws PayUException;
-    OpenPayUResponse retrieveOrder(String orderId) throws PayUException;
+    OrderCreateResponse createOrder(OrderCreateRequest orderCreateRequest) throws PayUException;
+    OrderRetrieveResponse retrieveOrder(String orderId) throws PayUException;
     OpenPayUResponse updateOrder(OrderStatusUpdateRequest orderStatusUpdateRequest);
     OpenPayUResponse cancelOrder(String orderId);
 

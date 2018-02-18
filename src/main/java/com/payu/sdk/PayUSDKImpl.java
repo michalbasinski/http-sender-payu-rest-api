@@ -26,7 +26,7 @@ public class PayUSDKImpl implements PayUSDK {
     private String password = SDKProperties.getProperty(PropertyNames.SECOND_KEY_MD5);
 
     @Override
-    public OpenPayUResponse createOrder(OrderCreateRequest orderCreateRequest) throws PayUException {
+    public OrderCreateResponse createOrder(OrderCreateRequest orderCreateRequest) throws PayUException {
         try {
             String url = SDKProperties.getProperty(PropertyNames.URL);
 
@@ -41,7 +41,7 @@ public class PayUSDKImpl implements PayUSDK {
     }
 
     @Override
-    public OpenPayUResponse retrieveOrder(String orderId) throws PayUException {
+    public OrderRetrieveResponse retrieveOrder(String orderId) throws PayUException {
         try {
             String orderRetrieveUrl = SDKProperties.getProperty(PropertyNames.ORDER_RETRIEVE_URL);
             MessageFormat format = new MessageFormat(orderRetrieveUrl);
