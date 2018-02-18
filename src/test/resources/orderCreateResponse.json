@@ -1,0 +1,7 @@
+{
+  "orderId": "8TLZCH75RX180218GUEST000P01",
+  "status": {
+    "statusCode": "SUCCESS"
+  },
+  "redirectUri": "https://secure.payu.com/pay/?orderId=8TLZCH75RX180218GUEST000P01&token=eyJhbGciOiJIUzI1NiJ9.eyJvcmRlcklkIjoiOFRMWkNINzVSWDE4MDIxOEdVRVNUMDAwUDAxIiwicG9zSWQiOiJ6RGVubjhoTiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ0xJRU5UIl0sImV4cCI6MTUxOTAzNDc3MywiaXNzIjoiUEFZVSIsImF1ZCI6ImFwaS1nYXRld2F5Iiwic3ViIjoiUGF5VSBzdWJqZWN0IiwianRpIjoiMDI1NjEzZTAtZDg3ZS00ZDIzLTgzNTItYjlhZGQwNmEyYzc2In0.lgYNq81Qz4DhHwJtwWXN6pY5KpJqeHilBEmt3YOGC2s"
+}

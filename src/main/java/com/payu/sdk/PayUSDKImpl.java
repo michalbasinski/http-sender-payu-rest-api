@@ -2,7 +2,8 @@ package com.payu.sdk;
 
 import com.payu.sdk.exceptions.PayUException;
 import com.payu.sdk.exceptions.WrongPayloadException;
-import com.payu.sdk.messages.converters.JSONConverter;
+import com.payu.sdk.messages.converters.RequestSerializer;
+import com.payu.sdk.messages.converters.ResponseDeserializer;
 import com.payu.sdk.messages.converters.ResponseType;
 import com.payu.sdk.messages.request.OrderCreateRequest;
 import com.payu.sdk.messages.request.OrderStatusUpdateRequest;
@@ -30,9 +31,9 @@ public class PayUSDKImpl implements PayUSDK {
             String url = SDKProperties.getProperty(PropertyNames.URL);
 
             HttpPostSender httpPostSender = new HttpPostSender();
-            PayUHttpResponse result = httpPostSender.sendRequest(url, login, password, JSONConverter.serializeRequest(orderCreateRequest));
+            PayUHttpResponse result = httpPostSender.sendRequest(url, login, password, RequestSerializer.serializeRequest(orderCreateRequest));
 
-            OrderCreateResponse orderCreateResponse = (OrderCreateResponse) JSONConverter.parseResponse(result.getPayload(), ResponseType.ORDER_CREATE_RESPONSE);
+            OrderCreateResponse orderCreateResponse = (OrderCreateResponse) ResponseDeserializer.parseResponse(result.getPayload(), ResponseType.ORDER_CREATE_RESPONSE);
             return orderCreateResponse;
         } catch (Exception e) {
             throw new PayUException(e.getMessage(), e);
@@ -50,7 +51,7 @@ public class PayUSDKImpl implements PayUSDK {
             HttpGetSender httpGetSender = new HttpGetSender();
 
             PayUHttpResponse result = httpGetSender.sendRequest(url, login, password);
-            OrderRetrieveResponse orderRetrieveResponse = (OrderRetrieveResponse) JSONConverter.parseResponse(result.getPayload(), ResponseType.ORDER_RETRIEVE_RESPONSE);
+            OrderRetrieveResponse orderRetrieveResponse = (OrderRetrieveResponse) ResponseDeserializer.parseResponse(result.getPayload(), ResponseType.ORDER_RETRIEVE_RESPONSE);
             return orderRetrieveResponse;
         } catch (IOException e) {
             throw new PayUException(e.getMessage(), e);

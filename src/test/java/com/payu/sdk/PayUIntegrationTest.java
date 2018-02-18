@@ -3,7 +3,8 @@ package com.payu.sdk;
 import com.payu.sdk.exceptions.PayUException;
 import com.payu.sdk.exceptions.WrongPayloadException;
 import com.payu.sdk.exceptions.WrongProtocolException;
-import com.payu.sdk.messages.converters.JSONConverter;
+import com.payu.sdk.messages.converters.RequestSerializer;
+import com.payu.sdk.messages.converters.ResponseDeserializer;
 import com.payu.sdk.messages.converters.ResponseType;
 import com.payu.sdk.messages.entities.Buyer;
 import com.payu.sdk.messages.entities.Product;
@@ -31,6 +32,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * All tests are ignored to avoid sending requests to PayU with every maven build
+ */
 public class PayUIntegrationTest {
 
     private Logger LOGGER = Logger.getGlobal();
@@ -55,13 +59,13 @@ public class PayUIntegrationTest {
     }
 
     @Test
-    @Ignore //ignored to avoid sending requests to PayU with every maven build
+    @Ignore
     public void shouldCreateNewOrderWithoutErrors() throws WrongProtocolException, WrongPayloadException, IOException {
         OpenPayURequest orderCreateRequest = prepareOrderCreateRequest();
 
-        PayUHttpResponse result = httpPostSender.sendRequest(orderCreateUrl, login, password, JSONConverter.serializeRequest(orderCreateRequest));
+        PayUHttpResponse result = httpPostSender.sendRequest(orderCreateUrl, login, password, RequestSerializer.serializeRequest(orderCreateRequest));
 
-        OrderCreateResponse orderCreateResponse = (OrderCreateResponse) JSONConverter.parseResponse(result.getPayload(), ResponseType.ORDER_CREATE_RESPONSE);
+        OrderCreateResponse orderCreateResponse = (OrderCreateResponse) ResponseDeserializer.parseResponse(result.getPayload(), ResponseType.ORDER_CREATE_RESPONSE);
 
         LOGGER.log(Level.INFO, "Sending 'POST' request to URL : " + orderCreateUrl +
                 "\nCurrent POS : " + login +
@@ -80,7 +84,7 @@ public class PayUIntegrationTest {
         MessageFormat format = new MessageFormat(orderRetrieveUrl);
         String url = format.format(args);
         PayUHttpResponse result = httpGetSender.sendRequest(url, login, password);
-        OrderRetrieveResponse orderRetrieveResponse = (OrderRetrieveResponse) JSONConverter.parseResponse(result.getPayload(), ResponseType.ORDER_RETRIEVE_RESPONSE);
+        OrderRetrieveResponse orderRetrieveResponse = (OrderRetrieveResponse) ResponseDeserializer.parseResponse(result.getPayload(), ResponseType.ORDER_RETRIEVE_RESPONSE);
         System.out.println(result.getPayload());
     }
 

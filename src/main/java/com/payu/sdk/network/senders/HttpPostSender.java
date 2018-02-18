@@ -14,13 +14,13 @@ public class HttpPostSender extends AbstractHttpSender {
 
     public PayUHttpResponse sendRequest(String url, String login, String password, String payload) throws WrongPayloadException, WrongProtocolException, IOException {
         try {
-            HttpPost post = new HttpPost(url);
+            HttpPost httpPost = new HttpPost(url);
 
-            post.setHeader(HEADER_AUTHORIZATION, BasicAuthUtils.generateAuthorizationHeader(login, password));
-            post.setHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
+            httpPost.setHeader(HEADER_AUTHORIZATION, BasicAuthUtils.generateAuthorizationHeader(login, password));
+            httpPost.setHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
 
-            post.setEntity(new StringEntity(payload));
-            HttpResponse rawHttpResponse = httpClient.execute(post);
+            httpPost.setEntity(new StringEntity(payload));
+            HttpResponse rawHttpResponse = httpClient.execute(httpPost);
             return new PayUHttpResponse(rawHttpResponse);
         } catch (UnsupportedEncodingException e) {
             throw new WrongPayloadException(e.getMessage(), e);

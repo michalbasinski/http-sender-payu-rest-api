@@ -9,12 +9,12 @@ import java.io.IOException;
 public class HttpGetSender extends AbstractHttpSender {
     public PayUHttpResponse sendRequest(String url, String login, String password) throws IOException, WrongPayloadException {
 
-        HttpGet post = new HttpGet(url);
+        HttpGet httpGet = new HttpGet(url);
 
-        post.setHeader(HEADER_AUTHORIZATION, BasicAuthUtils.generateAuthorizationHeader(login, password));
-        post.setHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
+        httpGet.setHeader(HEADER_AUTHORIZATION, BasicAuthUtils.generateAuthorizationHeader(login, password));
+        httpGet.setHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
 
-        HttpResponse rawHttpResponse = httpClient.execute(post);
+        HttpResponse rawHttpResponse = httpClient.execute(httpGet);
         return new PayUHttpResponse(rawHttpResponse);
     }
 }
